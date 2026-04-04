@@ -66,9 +66,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="**\*.h" />
-    <ClCompile Include="common\%28carcol backup%29 CarSimulation.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="common\CarSimulation.cpp" />
     <ClCompile Include="common\CCar.cpp" />
     <ClCompile Include="common\CCarSim.cpp" />
@@ -94,9 +91,6 @@
     <ClCompile Include="common\Loggin.cpp" />
     <ClCompile Include="common\MathLib.cpp" />
     <ClCompile Include="common\Options.cpp" />
-    <ClCompile Include="src\%28backup%29font.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="src\Cache.cpp" />
     <ClCompile Include="src\CButton.cpp" />
     <ClCompile Include="src\CCamera.cpp" />
