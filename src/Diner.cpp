@@ -149,20 +149,27 @@ bool Dnr_Start(char *szDir)
     glMaterialfv(GL_FRONT, GL_SPECULAR, one);
 
 
-    System_ProcessInput();
+	System_ProcessInput();
 	while(psDiner->bProcessDiner) {
 		System_ProcessInput();
 
-        //
-        // Processing
-        //
-        psDiner->pcLocation->Process();
-        psDiner->cSky.Simulate(tMainSR3.fDeltaTime);
+		// Escape key leaves the diner
+		if( kb->KeyUp[SDL_SCANCODE_ESCAPE] && !psDiner->bSpeechBubble ) {
+			psDiner->bProcessDiner = false;
+			psDiner->bRacing = false;
+			break;
+		}
 
-        if( !psDiner->bSpeechBubble ) {
-            Dnr_ProcessOpponent();
-            Dnr_ProcessGUI();
-        }
+		//
+		// Processing
+		//
+		psDiner->pcLocation->Process();
+		psDiner->cSky.Simulate(tMainSR3.fDeltaTime);
+
+		if( !psDiner->bSpeechBubble ) {
+			Dnr_ProcessOpponent();
+			Dnr_ProcessGUI();
+		}
 
 		cMainGuy->processFrame();
 
@@ -398,6 +405,71 @@ void Dnr_ProcessGUI(void)
                 }
                 break;
 
+            // Road race
+            case dng_road:
+                if(ev->iEventMsg == BUT_CLICKED) {
+                    sRaceInfo.nType = rc_road;
+
+                    // Show tracks
+                    Dnr_ChallengeOpponent(1, 1);
+                    return;
+                }
+                break;
+
+            // Road : track selection
+            case dng_roadtrk1:      // Fall through
+            case dng_roadtrk2:
+            case dng_roadtrk3:
+            case dng_roadtrk4:
+            case dng_roadtrk5:
+            case dng_roadtrk6:
+            case dng_roadtrk7:
+            case dng_roadtrk8:
+            case dng_roadtrk9:
+                if(ev->iEventMsg == BUT_CLICKED) {
+                    int l = ev->iControlID - dng_roadtrk1;
+                    sr_strncpy(sRaceInfo.szTrackDir, psDiner->sRoadTracks[l].szDir, 127);
+
+                    // Show bets
+                    Dnr_ChallengeOpponent(2, 1);
+                    return;
+                }
+                break;
+
+            // Road : Back
+            case dng_roadback:
+                if(ev->iEventMsg == BUT_CLICKED) {
+                    Dnr_ChallengeOpponent(1, 1);
+                    return;
+                }
+                break;
+
+            // Road : Bet
+            case dng_road25:
+                if(ev->iEventMsg == BUT_CLICKED)
+                    Dnr_MakeOffer(rcb_money, 25);
+                break;
+
+            case dng_road50:
+                if(ev->iEventMsg == BUT_CLICKED)
+                    Dnr_MakeOffer(rcb_money, 50);
+                break;
+
+            case dng_road100:
+                if(ev->iEventMsg == BUT_CLICKED)
+                    Dnr_MakeOffer(rcb_money, 100);
+                break;
+
+            case dng_road150:
+                if(ev->iEventMsg == BUT_CLICKED)
+                    Dnr_MakeOffer(rcb_money, 150);
+                break;
+
+            case dng_roadpink:
+                if(ev->iEventMsg == BUT_CLICKED)
+                    Dnr_MakeOffer(rcb_pink, 0);
+                break;
+
             // Drag : track selection
             case dng_dragtrk1:      // Fall through
             case dng_dragtrk2:
@@ -611,6 +683,20 @@ void Dnr_ChallengeOpponent(int nLevel, int nType)
             cDinerLayout.Add( new CButton("Forget it",-1),          dng_cancel, 335,330,0,  0);
             cDinerLayout.Add( new CDialog("Race", dlgs_small),      dng_dlg,    0,  0,  230,200);
         }
+
+        // Road
+        if(nType == 1) {
+            for(int i=0; i<psDiner->nNumRoadTracks; i++) {
+                cDinerLayout.Add(new CButton(psDiner->sRoadTracks[i].szName,-1),   dng_roadtrk1+i,   335,230+i*5,0,  0);
+
+                CButton *b = ((CButton *)cDinerLayout.getWidget(dng_roadtrk1+i));
+                if(b)
+                    b->setSize(10);
+            }
+
+            cDinerLayout.Add( new CButton("Forget it",-1),          dng_cancel, 335,330,0,  0);
+            cDinerLayout.Add( new CDialog("Race", dlgs_small),      dng_dlg,    0,  0,  230,200);
+        }
     }
 
     // Level 3
@@ -621,8 +707,19 @@ void Dnr_ChallengeOpponent(int nLevel, int nType)
             cDinerLayout.Add( new CButton("For kicks",-1),          dng_dragkicks,   335,220,0,  0);
             cDinerLayout.Add( new CButton("$10",-1),                dng_drag10,      335,260,0,  0);
             cDinerLayout.Add( new CButton("$50",-1),                dng_drag50,      335,300,0,  0);            
-            
+
             cDinerLayout.Add( new CButton("Back",-1),               dng_dragback,    335,350,0,  0);
+            cDinerLayout.Add( new CDialog("Race", dlgs_small),      dng_dlg,    0,  0,  230,200);
+        }
+
+        // Road
+        if(nType == 1) {
+            cDinerLayout.Add( new CButton("$25",-1),                dng_road25,      335,210,0,  0);
+            cDinerLayout.Add( new CButton("$50",-1),                dng_road50,      335,245,0,  0);
+            cDinerLayout.Add( new CButton("$100",-1),               dng_road100,     335,280,0,  0);
+            cDinerLayout.Add( new CButton("$150",-1),               dng_road150,     335,315,0,  0);
+            cDinerLayout.Add( new CButton("Pink slip",-1),          dng_roadpink,    335,350,0,  0);
+            cDinerLayout.Add( new CButton("Back",-1),               dng_roadback,    335,390,0,  0);
             cDinerLayout.Add( new CDialog("Race", dlgs_small),      dng_dlg,    0,  0,  230,200);
         }
 
@@ -739,7 +836,7 @@ void Dnr_SpeechProcess(void)
 
     Font_Draw( 400 - length/2, 445, CVec(0,0,0), szDnrSpeech );
 
-    if( (System_GetMouse()->Up & SDL_BUTTON(1)) || System_GetKeyboard()->KeyUp[SDLK_ESCAPE] ) {
+    if( (System_GetMouse()->Up & SDL_BUTTON(1)) || System_GetKeyboard()->KeyUp[SDL_SCANCODE_ESCAPE] ) {
         psDiner->bSpeechBubble = false;
 
         // If we have an offer, lets go!

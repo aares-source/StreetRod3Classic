@@ -143,27 +143,37 @@ gui_event_t *CGuiLayout::Process(void)
 
     // Parse keyboard events to the focused widget
 	if(pcFocus) {
-		
-		// Make sure a key event happened
-		if(Event->type == SDL_KEYUP || Event->type == SDL_KEYDOWN) {
+		keyboard_t *kb = System_GetKeyboard();
 
-			// Check the characters
-			if(Event->key.state == SDL_PRESSED || Event->key.state == SDL_RELEASED) {
-				tEvent->cWidget = pcFocus;
-				tEvent->iControlID = pcFocus->getID();
+		for(int sc = 0; sc < SDL_NUM_SCANCODES; sc++) {
+			if(!kb->KeyDown[sc] && !kb->KeyUp[sc])
+				continue;
 
-				char input = (char)(Event->key.keysym.sym & 0x007F);
+			// Convert scancode to a printable char
+			SDL_Keycode sym = SDL_GetKeyFromScancode((SDL_Scancode)sc);
+			char input = 0;
 
-				if(Event->type == SDL_KEYUP || Event->key.state == SDL_RELEASED)
-					ev = pcFocus->KeyUp(input);
-				
-				if(Event->type == SDL_KEYDOWN)
-					ev = pcFocus->KeyDown(input);
+			if(sym == SDLK_BACKSPACE)
+				input = '\b';
+			else if(sym == SDLK_RETURN || sym == SDLK_KP_ENTER)
+				input = '\r';
+			else if(sym > 0 && sym < 128)
+				input = (char)sym;
 
-				if(ev >= 0) {
-					tEvent->iEventMsg = ev;
-					return tEvent;
-				}
+			if(!input)
+				continue;
+
+			tEvent->cWidget = pcFocus;
+			tEvent->iControlID = pcFocus->getID();
+
+			if(kb->KeyDown[sc])
+				ev = pcFocus->KeyDown(input);
+			else if(kb->KeyUp[sc])
+				ev = pcFocus->KeyUp(input);
+
+			if(ev >= 0) {
+				tEvent->iEventMsg = ev;
+				return tEvent;
 			}
 		}
 	}
@@ -281,4 +291,17 @@ void CGuiLayout::captureMouse(CWidget *psWidget)
 void CGuiLayout::releaseMouse(void)
 {
     pcCapturedWidget = NULL;
+}
+
+///////////////////
+// Set focus to a widget by ID
+void CGuiLayout::setFocus(int id)
+{
+    CWidget *w = getWidget(id);
+    if(w) {
+        if(pcFocus)
+            pcFocus->setFocus(false);
+        w->setFocus(true);
+        pcFocus = w;
+    }
 }

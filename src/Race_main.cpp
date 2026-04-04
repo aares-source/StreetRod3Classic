@@ -62,6 +62,33 @@ bool        bProcessRace = true;
 bool        bRacingMenu = false;
 
 
+// Engine sound synthesis
+static HSTREAM  hEngineStream = 0;
+static float    fEngineFreq   = 70.0f;
+static float    fEnginePhase  = 0.0f;
+
+DWORD CALLBACK EngineStreamProc(HSTREAM handle, void *buffer, DWORD length, void *user)
+{
+    short  *buf     = (short *)buffer;
+    int     samples = (int)(length / sizeof(short));
+    const float sampleRate = 44100.0f;
+
+    for(int i = 0; i < samples; i++) {
+        float p  = fEnginePhase;
+        // Sawtooth fundamental + 2nd and 3rd harmonics
+        float v  =  0.50f * (p - 1.0f);
+        v       +=  0.25f * (fmodf(p * 2.0f, 2.0f) - 1.0f);
+        v       +=  0.12f * (fmodf(p * 3.0f, 2.0f) - 1.0f);
+
+        buf[i] = (short)(v * 9000);
+
+        fEnginePhase += fEngineFreq * 2.0f / sampleRate;
+        if(fEnginePhase >= 2.0f) fEnginePhase -= 2.0f;
+    }
+    return length;
+}
+
+
 
 ///////////////////
 // Main racing routine
@@ -156,7 +183,7 @@ int Race_Start(char *track)
         }
 
         // Driving menu
-        if( kb->KeyUp[SDLK_ESCAPE] ) {
+        if( kb->KeyUp[SDL_SCANCODE_ESCAPE] ) {
 
             if( !psRace->pcRaceCar->getCarSim()->bFinished && !bRacingMenu ) {
                 // In-race menu
@@ -168,7 +195,7 @@ int Race_Start(char *track)
             }
         }
 
-        if( kb->KeyUp[SDLK_SPACE] ) {
+        if( kb->KeyUp[SDL_SCANCODE_SPACE] ) {
             if( psRace->pcRaceCar->getCarSim()->bFinished ) {
                 // Go back to the diner
                 break;
@@ -263,7 +290,7 @@ int Race_Start(char *track)
             if( nRaceWinner == 0 ) {
                 // I Won
                 Font_SetSize(20);
-                Font_Draw(330,300, CVec(1,1,1), "You Won!");
+                Font_Draw(330,300, CVec(1,1,1), "You Win!");
                 
                 // Draw the stats
                 Race_DrawFinished();
@@ -272,7 +299,7 @@ int Race_Start(char *track)
             if( nRaceWinner == 1 && psRace->pcRaceCar->getCarSim()->bFinished ) {
                 // I Lost
                 Font_SetSize(20);
-                Font_Draw(320,300, CVec(1,1,1), "You Lost!");
+                Font_Draw(320,300, CVec(1,1,1), "You've Lost!");
 
                 // Draw the stats
                 Race_DrawFinished();
@@ -320,6 +347,13 @@ int Race_Start(char *track)
 
 	// Back to diner
 	Game_SetLocation(LOC_DINER);
+
+	// Free engine sound
+	if(hEngineStream) {
+		BASS_ChannelStop(hEngineStream);
+		BASS_StreamFree(hEngineStream);
+		hEngineStream = 0;
+	}
 
 	// HACK
 	// Game_SetLocation(LOC_EXIT);
@@ -404,11 +438,15 @@ int Race_Load(char *szTrack)
 	else
 		psRace->fFinishLine = 0;
 
+    // Start engine sound stream
+    fEngineFreq  = 70.0f;
+    fEnginePhase = 0.0f;
+    hEngineStream = BASS_StreamCreate(44100, 1, 0, EngineStreamProc, 0);
+    if(hEngineStream)
+        BASS_ChannelPlay(hEngineStream, FALSE);
+
     return true;
 }
-
-
-int Stepped = false;
 
 ///////////////////
 // Process the race driving
@@ -547,6 +585,10 @@ void Race_ProcessDriving(void)
 
 	// Simulate the main car
 	Car_ProcessCar( psCar, psRace->pcTrackModel, psRace->pcRaceCar, &psRace->cCamera, dt, false );
+
+	// Update engine sound frequency based on RPM (V8 firing: RPM/60*4)
+	if(hEngineStream)
+		fEngineFreq = MAX(50.0f, (float)psCar->nRPM / 60.0f * 4.0f);
 
 	// Simulate the opponent
     Car_ProcessCar( psOpp, psRace->pcTrackModel, psRace->pcOppCar, NULL, dt, false );

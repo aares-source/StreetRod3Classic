@@ -601,9 +601,9 @@ void Menu_Options(void)
                         psOptions->nMusicVolume = ((CSlider *)cOptions.getWidget(opt_musicvol))->getValue();
 
                         // Update the sound lib
-                        if(psOptions->nSoundOn) {
-                            BASS_Start();
-	                        BASS_SetVolume(psOptions->nSoundVolume);
+						if(psOptions->nSoundOn) {
+							BASS_Start();
+							BASS_SetVolume((float)psOptions->nSoundVolume / 100.0f);
                         } else
                             BASS_Stop();
 
@@ -798,6 +798,8 @@ void Menu_EnterName(void)
     cName.Initialize();
     cName.Add( new CTextbox(),          0, 410,318, 200, 35);
     cName.Add( new CButton("Done",0),   1, 575,410, 128, 32);
+    cName.setFocus(0);
+    cName.setFocus(0);  // Auto-foco en el textbox
 
 
     while(1) {

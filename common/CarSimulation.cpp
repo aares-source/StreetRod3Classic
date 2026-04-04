@@ -381,7 +381,7 @@ void Car_SimulateCar(carsim_t *psCar, CModel *pcTrack, float dt)
 
 
 	// Flip the car back onto its tyres
-	if(System_GetKeyboard()->KeyDown[SDLK_f] && psCar->bCollision) {
+	if(System_GetKeyboard()->KeyDown[SDL_SCANCODE_F] && psCar->bCollision) {
 		psCar->bFlipping = true;
 		psCar->cFlipNormal = psCar->cColNormal;
 	}
@@ -916,13 +916,13 @@ void Car_SetupCamera(carsim_t *psCar, CCamera *pcCam, float dt)
     //
     keyboard_t *kb = System_GetKeyboard();
 	if(psOptions->nDeveloper) {
-		if(kb->keys[SDLK_q])
+		if(kb->keys[SDL_SCANCODE_Q])
 			pcCam->Setup(pos - psCar->X*35 + psCar->Z*5, pos);
-		if(kb->keys[SDLK_e])
+		if(kb->keys[SDL_SCANCODE_E])
 			pcCam->Setup(pos + psCar->X*35 + psCar->Z*5, pos);
-		if(kb->keys[SDLK_w])
+		if(kb->keys[SDL_SCANCODE_W])
 			pcCam->Setup(pos + psCar->Y*35 + psCar->Z*5, pos);
-		if(kb->keys[SDLK_s])
+		if(kb->keys[SDL_SCANCODE_S])
 			pcCam->Setup(pos + psCar->Z*50, pos);
 	}
 

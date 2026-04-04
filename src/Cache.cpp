@@ -228,12 +228,12 @@ HSAMPLE Cache_LoadSample(char *sFilename, int max)
 	
 	// Load the sample
 	cache->smpSample = BASS_SampleLoad(false,sFilename,0,0,max,0);
-	if(cache->smpSample < 0)
+	if(cache->smpSample == 0)
 	{
 		// 17/06/05
-		writeLog("File \"%s\" could not be loaded as a sample",sFilename);
+		writeLog("File \"%s\" could not be loaded as a sample (BASS error: %d)\n",sFilename, BASS_ErrorGetCode());
 		//
-		return -1;
+		return 0;
 	}
 
 	cache->iType = CCH_SAMPLE;

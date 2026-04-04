@@ -83,10 +83,11 @@ public:
 
 	void		Shutdown(void);
 
-    void        captureMouse(CWidget *psWidget);
-    void        releaseMouse(void);
+	void        captureMouse(CWidget *psWidget);
+	void        releaseMouse(void);
+	void        setFocus(int id);
 
-    int         processWidget(CWidget *w);
+	int         processWidget(CWidget *w);
 
 };
 

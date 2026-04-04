@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 	writeLog("Street Rod 3 begin system initialization...\n");
 
 	// Initialize SDL
-	if(SDL_Init(SDL_INIT_VIDEO)) {
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) {
 		writeLog("Error: SDL Failed to initialize!\n");
 		writeLog("  SDL Returns:  %s\n",SDL_GetError());
 		System_Shutdown();
@@ -140,14 +140,32 @@ int main(int argc, char *argv[])
 // Initialize the sound
 void System_InitializeSound(void)
 {    
-    if(!bDisableSound && psOptions->nSoundOn) {
-	    // Initialize BASS
-		if(!BASS_Init(-1,44100,0,GetForegroundWindow(),NULL)) {
-            writeLog("Warning: Could not initialize sound\n");
-	    }
-	    BASS_Start();
-	    BASS_SetVolume(psOptions->nSoundVolume);
-    }
+	if(!bDisableSound && psOptions->nSoundOn) {
+		// Get the SDL window handle for BASS
+		HWND hwnd = NULL;
+		if(gSDLWindow) {
+			SDL_SysWMinfo wminfo;
+			SDL_VERSION(&wminfo.version);
+			if(SDL_GetWindowWMInfo(gSDLWindow, &wminfo))
+				hwnd = wminfo.info.win.window;
+		}
+
+		// Initialize BASS - try default device first, then no-sound-check fallback
+		if(!BASS_Init(-1, 44100, 0, hwnd, NULL)) {
+			int err = BASS_ErrorGetCode();
+			writeLog("Warning: Could not initialize sound on default device (BASS error: %d)\n", err);
+			// Try with no specific device (let Windows pick)
+			if(!BASS_Init(0, 44100, 0, hwnd, NULL)) {
+				writeLog("Warning: Could not initialize sound on any device (BASS error: %d)\n", BASS_ErrorGetCode());
+				return;
+			}
+			writeLog("Sound initialized OK (fallback device)\n");
+		} else {
+			writeLog("Sound initialized OK\n");
+		}
+		BASS_Start();
+		BASS_SetVolume((float)psOptions->nSoundVolume / 100.0f);
+	}
 }
 
 

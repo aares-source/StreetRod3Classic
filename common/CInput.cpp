@@ -333,7 +333,7 @@ int CInput::isUp(void)
 		
 		// Keyboard
 		case INP_KEYBOARD:	
-			if(Keyb->KeyUp[Data])
+			if(Keyb->KeyUp[SDL_GetScancodeFromKey(Data)])
 				return true;
 			break;
 		
@@ -366,7 +366,7 @@ int CInput::isDown(void)
 
 		// Keyboard
 		case INP_KEYBOARD:
-			if(Keyb->keys[Data])
+			if(Keyb->keys[SDL_GetScancodeFromKey(Data)])
 				return true;
 			break;
 
@@ -450,7 +450,7 @@ void CInput::ClearUpState(void)
 		
 		// Keyboard
 		case INP_KEYBOARD:	
-			Keyb->KeyUp[Data] = false;
+			Keyb->KeyUp[SDL_GetScancodeFromKey(Data)] = false;
 			break;
 		
 		// Mouse

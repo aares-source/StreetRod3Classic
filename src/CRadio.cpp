@@ -94,32 +94,30 @@ void CRadio::freePlaylist(void)
 // Load the playlist
 void CRadio::loadSongs(void)
 {
-    // Free the old playlist
-    freePlaylist();
+	// Free the old playlist
+	freePlaylist();
 
-    // Get the first file
-    char filename[256];
-    if( !FindFirst("music", "*.mp3", filename) )
-        return;
+	writeLog("Radio: Loading files:\n");
 
-    writeLog("Radio: Loading files:\n");
-    
-    while(1) {
+	// Search directories for MP3 files
+	char *searchDirs[] = { "music", "data/sounds" };
+	char filename[256];
 
-        addSong(filename);
-        writeLog(" Adding %s\n",filename);
+	for(int d = 0; d < 2; d++) {
+		if( !FindFirst(searchDirs[d], "*.mp3", filename) )
+			continue;
 
-        if( !FindNext(filename) )
-            break;
-    }
+		do {
+			addSong(filename);
+			writeLog(" Adding %s\n", filename);
+		} while( FindNext(filename) );
+	}
 
 	// TODO: Create a shuffle array
 
-    // Play the first song
-    if( m_psMP3Playlist )
-        playSong(m_psMP3Playlist);
-
-    return;
+	// Play the first song
+	if( m_psMP3Playlist )
+		playSong(m_psMP3Playlist);
 }
 
 
