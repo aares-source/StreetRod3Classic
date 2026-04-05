@@ -660,10 +660,18 @@ void Car_CheckCollisions(carsim_t *psCar, CCar *pcCar, CModel *pcTrack)
 	psCar->bCollision = false;
 
 	CollisionModel3D *col = pcCar->getColMod();//pcCar->getModel()->GetCDModel();
+	CollisionModel3D *trackCol = pcTrack->getCDModel();
+
+	if(!col || !trackCol)
+		return;
 
 	col->setTransform(m);
 
-	if(col->collision( pcTrack->getCDModel(),-1,500 )) {
+	bool bHit = false;
+	try { bHit = col->collision( trackCol,-1,500 ); }
+	catch(...) { return; }
+
+	if(bHit) {
 
 		// Get collision point
 		//carcol->getCollisionPoint(v1);

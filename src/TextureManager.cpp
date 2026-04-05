@@ -258,6 +258,15 @@ void Tex_Bind(texture_t *tex)
 
 
 ///////////////////
+// Reset the texture bind cache so the next Tex_Bind call always re-binds.
+// Call this when entering a new scene to avoid stale cached IDs.
+void Tex_ResetBound(void)
+{
+	nCurrentTexID[0] = nCurrentTexID[1] = -666;
+}
+
+
+///////////////////
 // Add a dir to the texture dir list
 void Tex_AddDir(char *szDir)
 {

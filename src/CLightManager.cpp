@@ -148,6 +148,9 @@ void CLightManager::useLights(void)
 
     for(n=0; n<m_nMaxLights; n++, ul++) {
 
+        if( !ul->nUsed || !ul->psLight )
+            continue;
+
         float pos[4] = { ul->psLight->Position.GetX(),
                          ul->psLight->Position.GetY(),
                          ul->psLight->Position.GetZ(),

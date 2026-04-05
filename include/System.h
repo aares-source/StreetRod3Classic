@@ -76,6 +76,7 @@ void	System_InitializeInput(void);
 void    System_InitializeSound(void);
 void	System_ProcessInput(void);
 int     GetFPS(void);
+bool    System_IsQuitRequested(void);
 
 void    ParseArguments(int argc, char *argv[]);
 

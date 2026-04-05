@@ -52,6 +52,7 @@ texture_t   *Tex_Create(int nWidth, int nHeight);
 void		Tex_Free(texture_t *tex);
 void		Tex_Upload(texture_t *tex, int force = false);
 void		Tex_Bind(texture_t *tex);
+void        Tex_ResetBound(void);
 
 void        Tex_AddDir(char *szDir);
 void        Tex_RemoveDir(char *szDir);

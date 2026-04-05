@@ -141,25 +141,25 @@ void Gar_ProcessEngRun(void)
 {
     keyboard_t *kb = System_GetKeyboard();
 
-    // Engine
-    if( tGarage->iState == GAR_ENGINE ) {
-        // If escape is pressed, go back to the garage view
-        if( kb->KeyUp[SDLK_ESCAPE] ) {
-            Gar_Engine2Garage();
-            cGarSection.toggleItem("car");
-        }
-        return;
-    }
+	// Engine
+	if( tGarage->iState == GAR_ENGINE ) {
+		// If escape is pressed, go back to the garage view
+		if( kb->KeyUp[SDL_SCANCODE_ESCAPE] ) {
+			Gar_Engine2Garage();
+			cGarSection.toggleItem("car");
+		}
+		return;
+	}
 
-    // Running gear
-    if( tGarage->iState == GAR_RUNNINGG ) {
-        // If escape is pressed, go back to the garage view
-        if( kb->KeyUp[SDLK_ESCAPE] ) {
-            Gar_Running2Garage();
-            cGarSection.toggleItem("car");
-        }
-        return;
-    }
+	// Running gear
+	if( tGarage->iState == GAR_RUNNINGG ) {
+		// If escape is pressed, go back to the garage view
+		if( kb->KeyUp[SDL_SCANCODE_ESCAPE] ) {
+			Gar_Running2Garage();
+			cGarSection.toggleItem("car");
+		}
+		return;
+	}
 
 }
 

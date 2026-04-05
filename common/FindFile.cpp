@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 char	_dir[256];
-long	handle = 0;
+intptr_t handle = 0;
 struct _finddata_t fileinfo;
 
 

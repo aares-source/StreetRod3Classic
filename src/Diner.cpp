@@ -153,6 +153,13 @@ bool Dnr_Start(char *szDir)
 	while(psDiner->bProcessDiner) {
 		System_ProcessInput();
 
+		// Window close button
+		if( System_IsQuitRequested() ) {
+			psDiner->bProcessDiner = false;
+			psDiner->bRacing = false;
+			break;
+		}
+
 		// Escape key leaves the diner
 		if( kb->KeyUp[SDL_SCANCODE_ESCAPE] && !psDiner->bSpeechBubble ) {
 			psDiner->bProcessDiner = false;
@@ -843,6 +850,12 @@ void Dnr_SpeechProcess(void)
         if(psDiner->bGoodOffer) {
             Dnr_LetsGo();
             return;
+        }
+
+        // Escape pressed (not accepting a race) → leave the diner
+        if( System_GetKeyboard()->KeyUp[SDL_SCANCODE_ESCAPE] ) {
+            psDiner->bProcessDiner = false;
+            psDiner->bRacing = false;
         }
     }
 }

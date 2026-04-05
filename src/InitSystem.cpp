@@ -51,6 +51,7 @@ SDL_GLContext gGLContext = NULL;
 
 bool        bDisableSound = false;
 bool        bMultiTexture = false;
+static bool bQuitRequested = false;
 
 // OpenGL Extensions
 GLenum g_GL_TEXTURE0 = 0, g_GL_TEXTURE1 = 0;
@@ -211,7 +212,10 @@ void System_InitializeInput(void)
 void System_ProcessInput(void)
 {
 
-	while(SDL_PollEvent(&sdlEvent));
+	while(SDL_PollEvent(&sdlEvent)) {
+		if(sdlEvent.type == SDL_QUIT)
+			bQuitRequested = true;
+	}
 
 	// Mouse
 	tMouse.Button = SDL_GetMouseState(&tMouse.X,&tMouse.Y);
@@ -251,8 +255,16 @@ void System_ProcessInput(void)
 	if( tKeyboard.KeyUp[SDL_SCANCODE_F12] )
 		System_TakeScreenshot();
     
-    tMainSR3.TriCount = 0;
+	tMainSR3.TriCount = 0;
 
+}
+
+
+///////////////////
+// Returns true if the OS has requested the application to quit (Alt+F4, X button)
+bool System_IsQuitRequested(void)
+{
+	return bQuitRequested;
 }
 
 

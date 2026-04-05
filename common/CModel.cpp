@@ -737,8 +737,8 @@ void CModel::render(void)
                 if( mesh->nFlags & MSH_HIDDEN )
                     continue;
 
-                glInterleavedArrays( GL_N3F_V3F, 0, mesh->psVertexBuffer[0] );
-            
+                float *buf = mesh->psVertexBuffer[0];
+                if( !buf ) continue;
 
                 polygon_t *p = mesh->psPolygons;
                 for( i=0; i<mesh->nNumPolygons; i++, p++ ) {
@@ -776,8 +776,12 @@ void CModel::render(void)
                                              -m_psTexCoordList[p->psChannels[1].nTexCoord[v]].V );
                         }
 
-
-                        glArrayElement( i*3+v );
+                        // Direct vertex emission — replaces glInterleavedArrays+glArrayElement
+                        // which is unreliable in 64-bit driver contexts.
+                        // Vertex buffer layout (GL_N3F_V3F): [nx,ny,nz, vx,vy,vz] per vertex
+                        int k = (i*3+v) * 6;
+                        glNormal3f(buf[k], buf[k+1], buf[k+2]);
+                        glVertex3f(buf[k+3], buf[k+4], buf[k+5]);
                     }
                     glEnd();
 
@@ -891,22 +895,20 @@ void CModel::renderRaw(void)
         if( mesh->nFlags & MSH_HIDDEN )
             continue;
 
-        glInterleavedArrays( GL_N3F_V3F, 0, mesh->psVertexBuffer[0] );
+        float *buf = mesh->psVertexBuffer[0];
+        if( !buf ) continue;
 
         glBegin(GL_TRIANGLES);
         for( i=0; i<mesh->nNumPolygons; i++ ) {
-            glArrayElement( i*3 );
-            glArrayElement( i*3+1 );
-            glArrayElement( i*3+2 );
+            for( int v=0; v<3; v++ ) {
+                int k = (i*3+v) * 6;
+                glNormal3f(buf[k], buf[k+1], buf[k+2]);
+                glVertex3f(buf[k+3], buf[k+4], buf[k+5]);
+            }
             tMainSR3.TriCount++;
         }
         glEnd();
     }
-
-    // Disable the arrays
-    glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 
@@ -922,13 +924,16 @@ void CModel::renderRawWireframe(void)
         if( mesh->nFlags & MSH_HIDDEN )
             continue;
 
-        glInterleavedArrays( GL_N3F_V3F, 0, mesh->psVertexBuffer[0] );
+        float *buf = mesh->psVertexBuffer[0];
+        if( !buf ) continue;
 
         glBegin(GL_LINE_STRIP);
         for( i=0; i<mesh->nNumPolygons; i++ ) {
-            glArrayElement( i*3 );
-            glArrayElement( i*3+1 );
-            glArrayElement( i*3+2 );
+            for( int v=0; v<3; v++ ) {
+                int k = (i*3+v) * 6;
+                glNormal3f(buf[k], buf[k+1], buf[k+2]);
+                glVertex3f(buf[k+3], buf[k+4], buf[k+5]);
+            }
             glArrayElement( i*3 );
             tMainSR3.TriCount++;
         }

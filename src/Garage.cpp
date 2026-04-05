@@ -132,10 +132,16 @@ int Gar_Start(char *sDir)
 	while(bGarProcess) {
 		System_ProcessInput();
 
-        if( kb->KeyUp[SDLK_ESCAPE] && !bGarSystemMenu && tGarage->iState == GAR_NORMAL) {
-            Gar_InitSystemMenu();
-            kb->KeyUp[SDLK_ESCAPE] = false;
-        }
+		if( System_IsQuitRequested() ) {
+			bGarProcess = false;
+			Game_SetLocation(LOC_EXIT);
+			break;
+		}
+
+		if( kb->KeyUp[SDL_SCANCODE_ESCAPE] && !bGarSystemMenu && tGarage->iState == GAR_NORMAL) {
+			Gar_InitSystemMenu();
+			kb->KeyUp[SDL_SCANCODE_ESCAPE] = false;
+		}
 
 		// Process some global stuff
 		cMainGuy->processFrame();

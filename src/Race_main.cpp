@@ -102,9 +102,15 @@ int Race_Start(char *track)
 
 
 	// Fog
-    State_Enable(GL_FOG);
+	State_Enable(GL_FOG);
 	glFogf(GL_FOG_START, 800.0f);
 	glFogf(GL_FOG_END, 1000.0f);
+	float fogColor[4] = {0.1f, 0.1f, 0.15f, 1.0f};
+	glFogfv(GL_FOG_COLOR, fogColor);
+
+	// Reset texture binding cache so stale IDs from previous scenes don't
+	// prevent newly loaded textures from being bound on first use.
+	Tex_ResetBound();
 
 	State_Enable(GL_LIGHTING);
     State_Enable(GL_LIGHT0);
@@ -166,12 +172,28 @@ int Race_Start(char *track)
 
 	//check cInCarCamera variable here
 
+	// Reset physics timers to avoid a massive catch-up loop caused by
+	// the loading time between Car_SetupCar() and the first physics tick.
+	// Without this, Car_ProcessCar() would run (load_time / 0.025) iterations
+	// on the very first frame, each calling the BVH collision check, freezing
+	// the game before any frame is rendered (apparent "black screen").
+	{
+		double raceStartTime = (double)SDL_GetTicks() * 0.001;
+		psRace->pcRaceCar->getCarSim()->dTime = raceStartTime;
+		psRace->pcOppCar->getCarSim()->dTime  = raceStartTime;
+	}
+
 	System_ProcessInput();
 	while( bProcessRace ) {
 		System_ProcessInput();
 
-        if( !bRacingMenu )
-            fStartRace += tMainSR3.fDeltaTime;
+		if( System_IsQuitRequested() ) {
+			bProcessRace = false;
+			break;
+		}
+
+		if( !bRacingMenu )
+			fStartRace += tMainSR3.fDeltaTime;
 
 		// Global stuff
 		cMainGuy->processFrame();
@@ -442,8 +464,10 @@ int Race_Load(char *szTrack)
     fEngineFreq  = 70.0f;
     fEnginePhase = 0.0f;
     hEngineStream = BASS_StreamCreate(44100, 1, 0, EngineStreamProc, 0);
-    if(hEngineStream)
+    if(hEngineStream) {
+        BASS_ChannelSetAttribute(hEngineStream, BASS_ATTRIB_VOL, 0.1f);
         BASS_ChannelPlay(hEngineStream, FALSE);
+    }
 
     return true;
 }

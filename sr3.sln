@@ -14,15 +14,24 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}.Debug|Win32.Build.0 = Debug|Win32
+		{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}.Debug|x64.ActiveCfg = Debug|x64
+		{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}.Debug|x64.Build.0 = Debug|x64
 		{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}.Release|Win32.ActiveCfg = Release|Win32
 		{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}.Release|Win32.Build.0 = Release|Win32
+		{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}.Release|x64.ActiveCfg = Release|x64
+		{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CEE6910C-A372-40DB-8D27-25775E565F18}
 	EndGlobalSection
 EndGlobal
