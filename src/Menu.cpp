@@ -593,6 +593,7 @@ void Menu_Options(void)
 
                         // Video
                         psOptions->nFullscreen = ((CCheckbox *)cOptions.getWidget(opt_fullscreen))->getCheck();
+                        SDL_SetWindowFullscreen(gSDLWindow, psOptions->nFullscreen ? SDL_WINDOW_FULLSCREEN : 0);
                         if(((CCheckbox *)cOptions.getWidget(opt_16bpp))->getCheck())
                             psOptions->nColourDepth = psOptions->nZDepth = 16;
                         else

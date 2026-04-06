@@ -110,6 +110,8 @@ def write_mat(filepath: str, model) -> None:
                 fp.write('\t\tTcGen tc_sphere\n')
             elif tex_file:
                 fp.write(f'\t\tTexture {tex_file}\n')
+                fp.write('\t\tbackcull false\n')
+                fp.write('\t\tlighting false\n')
             else:
                 fp.write(f'\t\tRGB {r:.6f},{g:.6f},{b:.6f}\n')
 

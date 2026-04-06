@@ -205,9 +205,6 @@
     <None Include="game\data\cities\LA\city.sr3" />
     <None Include="game\data\lang\en.ini" />
     <None Include="game\data\lang\es.ini" />
-    <None Include="game\data\newspaper\seat600.sr3" />
-    <None Include="tools\patch_aux_gameobjects.ps1" />
-    <None Include="tools\patch_aux_gameobjects.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
