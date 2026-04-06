@@ -107,7 +107,7 @@ void Key_Initialize(void)
 int Key_FindValue(char *sName)
 {
 	for(int i=0;i<iNumKeywords;i++) {
-		if(stricmp(tKeywords[i].sName,sName) == 0)
+		if(_stricmp(tKeywords[i].sName,sName) == 0)
 			return tKeywords[i].iValue;
 	}
 

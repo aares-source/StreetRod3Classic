@@ -161,5 +161,5 @@ void CTextbox::Draw(void)
 void CTextbox::setText(char *text)
 {
     sr_strncpy(sText, text, 63);
-    nLength = strlen(sText);
+    nLength = static_cast<int>(strlen(sText));
 }

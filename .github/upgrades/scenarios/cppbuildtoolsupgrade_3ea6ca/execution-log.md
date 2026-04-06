@@ -87,3 +87,52 @@ Status: Failed. Rebuild using `sr3.sln` executed — many compile errors remain 
 Outcome
 Failed - Rebuild of `sr3.sln` failed with 421 errors; automated fix passes reached diminishing returns. Human intervention required to decide next steps (install v143 or choose alternate toolset, address remaining API/typedef mismatches, or provide guidance to continue automated passes).
 
+
+## [2026-04-05 20:50] TASK-001: Verify prerequisites and confirm project configuration
+
+Status: Complete
+
+- **Verified**: 
+  - PlatformToolset v143 presente en todas las configuraciones (Debug|Win32, Debug|x64, Release|Win32, Release|x64)
+  - Debug|x64 y Release|x64 referencian correctamente `lib\x64`
+  - Todas las librerías en `lib\x64` son binarios x64 (machine 8664): SDL2main.lib, SDL2_image.lib verificados
+- **Commits**: Ninguno — Git no disponible en PATH. Usuario debe crear branch manualmente: `upgrade/cppbuildtools-v143-x64-warnings`
+- **Files Modified**: Ninguno (solo verificación)
+- **Build Status**: No ejecutado en esta fase (prerequisito para siguientes tareas)
+
+Success - Configuración del proyecto verificada. Estado base v143 + x64 confirmado.
+
+
+## [2026-04-05 21:15] TASK-002: Fix critical 64-bit safety warnings (C4267, C4244 __int64)
+
+Status: Complete
+
+- **Verified**: 
+  - All C4267 warnings (size_t→int truncation) eliminated: 15 instances fixed across 13 files
+  - All C4244 __int64→int warnings eliminated: 3 instances fixed (pointer arithmetic)
+  - Critical underflow bug fixed in CommonFuncs.cpp and CScript.cpp (unsigned loop variable changed to int)
+- **Files Modified**: 
+  - CommonFuncs.cpp: Fixed underflow bug + 3 C4267 warnings
+  - CModel.cpp: 1 C4267 warning fixed
+  - CScript.cpp: Fixed underflow bug + 1 C4244 __int64 warning + 1 C4267 warning
+  - ConfigHandler.cpp: 1 C4244 __int64 warning fixed
+  - CSceneScript.cpp: 1 C4267 + 1 C4244 __int64 warnings fixed
+  - CLabel.cpp, CLocation.cpp, CTextbox.cpp, Diner.cpp, font.cpp, Garage_Dlg.cpp, Garage_Game.cpp, Garage_Newspaper.cpp, text.cpp, CMaterial.cpp: C4267 warnings fixed with static_cast
+- **Code Changes**: Added static_cast<int> for strlen() conversions; changed unsigned loop variables to int; added static_cast for pointer arithmetic
+- **Build Status**: Successful - 0 errors, 234 warnings (down from 254). All critical 64-bit safety warnings eliminated.
+
+Success - Phase 1 complete: 64-bit safety warnings (C4267, C4244 __int64) eliminated. Critical underflow bugs fixed.
+
+
+## [2026-04-05 21:23] TASK-003: Fix POSIX deprecation warnings (C4996)
+
+Status: Failed
+
+- **Verified**: None
+- **Files Modified**: CCar.cpp, CInput.cpp, CModel.cpp, ConfigHandler.cpp, CScript.cpp, CTexture.cpp, Keyword_Manager.cpp, CMaterial.cpp, CDialog.cpp, CSceneScript.cpp, CTaskBar.cpp, InitSystem.cpp, TextureManager.cpp, CPart.cpp, Utility.cpp (src\glFont)
+- **Code Changes**: Attempted to replace stricmp→_stricmp, strnicmp→_strnicmp, fopen→fopen_s, strncpy→strncpy_s
+- **Errors Introduced**: 14 linker errors (LNK2019, LNK2001, LNK1120) — PowerShell replace with -NoNewline corrupted CCar.cpp and CInput.cpp files, breaking symbol resolution
+- **Build Status**: Failed - 14 errors, 159 warnings
+
+Failed - Bulk PowerShell replacement corrupted source files. Need to revert affected files and apply replacement more carefully using individual file edits or proper line-preserving method.
+

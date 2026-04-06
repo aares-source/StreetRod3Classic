@@ -66,7 +66,7 @@ bool LoadOptions(void)
     // Sound
     ReadKeyword( "config.cfg", "Sound", "Sound", &psOptions->nSoundOn, true );
     ReadInteger( "config.cfg", "Sound", "Volume", &psOptions->nSoundVolume, 100 );
-    ReadInteger( "config.cfg", "Sound", "MusicVolume", &psOptions->nMusicVolume, 100 );
+    ReadInteger( "config.cfg", "Sound", "MusicVolume", &psOptions->nMusicVolume, 20 );
 
     // Controls
     ReadString( "config.cfg", "Controls", "Accelerate",     psOptions->szControls[INP_ACCELERATE],  "up" );

@@ -729,7 +729,7 @@ void Gar_NewspaperEntriesProcess(int nFilter)
             DrawRect(130,y-1, 670,y+1, col,col, 1, true, 1);
             Font_SetSize(24);
             y-=70;
-            int x = 400 - (strlen(text)*24)/2;
+			int x = 400 - (static_cast<int>(strlen(text))*24)/2;
             //Font_Draw(x, y, col, text);
             y-=50;
             DrawRect(130,y-1, 670,y+1, col,col, 1, true, 1);

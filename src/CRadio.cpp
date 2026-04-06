@@ -43,7 +43,7 @@ CRadio::CRadio()
     m_mp3Stream = NULL;
     m_psMP3Playlist = NULL;
     m_psMP3CurSong = NULL;
-    m_MusicVolume = 80;
+    m_MusicVolume = 20;
     m_bStopped = false;
 }
 

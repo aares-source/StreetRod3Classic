@@ -249,8 +249,8 @@ bool CSceneScript::load(char *szFilename, CModel *pcScene)
     // Parse the script
     while( fgets(szLine, 1023, fp) ) {
         TrimSpaces(szLine);
-        nLength = strlen(szLine);
-        
+        nLength = static_cast<int>(strlen(szLine));
+
         // Check for blank lines
         if( nLength == 0 )
             continue;
@@ -287,7 +287,7 @@ bool CSceneScript::load(char *szFilename, CModel *pcScene)
                 TrimSpaces(sCurObject.szName);
 
                 bIsArray = true;
-                int pos = readNum(szLine, d-szLine+1, &nStart);
+                int pos = readNum(szLine, static_cast<int>(d-szLine+1), &nStart);
                 readNum(szLine, pos+1, &nEnd);
 
                 // Array check
@@ -400,13 +400,13 @@ void CSceneScript::translateLine(char *szLine, scr_object_t *psObj)
         return;
 
     // Type
-    if( stricmp(tok, "type") == 0 ) {
+    if( _stricmp(tok, "type") == 0 ) {
         char *t = strtok(NULL," ");
         if(t)
             psObj->nType = Key_FindValue(t);
     } else
     // Texture
-    if( stricmp(tok, "texture") == 0 ) {
+    if( _stricmp(tok, "texture") == 0 ) {
         char *t = strtok(NULL," ");
         if(t) {
             psObj->psTexture = Cache_LoadTexture(t);
@@ -414,19 +414,19 @@ void CSceneScript::translateLine(char *szLine, scr_object_t *psObj)
         }
     } else
     // Alpha
-    if( stricmp(tok, "alpha") == 0 ) {
+    if( _stricmp(tok, "alpha") == 0 ) {
         char *t = strtok(NULL," ");
         if(t)
             psObj->fColour[3] = (float)atof(t);
     } else
     // Blend
-    if( stricmp(tok, "blend") == 0 ) {
+    if( _stricmp(tok, "blend") == 0 ) {
         char *t = strtok(NULL," ");
         if(t)
             psObj->nBlend  = Key_FindValue(t);
     } else
     // Colour
-    if( stricmp(tok, "colour") == 0 ) {
+    if( _stricmp(tok, "colour") == 0 ) {
         tok = strtok(NULL,",");
 		psObj->fColour[0] = (float)atof(tok);
 		tok = strtok(NULL,",");
@@ -435,19 +435,19 @@ void CSceneScript::translateLine(char *szLine, scr_object_t *psObj)
 		psObj->fColour[2] = (float)atof(tok);
     } else
     // Size
-    if( stricmp(tok, "size") == 0 ) {
+    if( _stricmp(tok, "size") == 0 ) {
         char *t = strtok(NULL," ");
         if(t)
             psObj->fSize = (float)atof(t);
     } else
     // Depth mask
-    if( stricmp(tok, "depthmask") == 0 ) {
+    if( _stricmp(tok, "depthmask") == 0 ) {
         char *t = strtok(NULL," ");
         if(t)
             psObj->nDepthMask = Key_FindValue(t);
     } else
     // Dimension
-    if( stricmp(tok, "dimension") == 0 ) {
+    if( _stricmp(tok, "dimension") == 0 ) {
         tok = strtok(NULL,",");
 		psObj->cDimensions.SetX( (float)atof(tok) );
 		tok = strtok(NULL,",");

@@ -276,7 +276,7 @@ void Tex_AddDir(char *szDir)
         if(sTextureDirList[i].bUsed) {
 
             // Check if we have got one already entered
-            if(stricmp(sTextureDirList[i].szDir,szDir) == 0)
+            if(_stricmp(sTextureDirList[i].szDir,szDir) == 0)
                 return;
         }
         else {
@@ -299,7 +299,7 @@ void Tex_RemoveDir(char *szDir)
     for( int i=MAX_TEXDIRLIST-1; i>=0; i-- ) {
         if( sTextureDirList[i].bUsed ) {
 
-            if( stricmp(sTextureDirList[i].szDir, szDir) == 0 ) {
+            if( _stricmp(sTextureDirList[i].szDir, szDir) == 0 ) {
                 sTextureDirList[i].bUsed = false;
                 return;
             }

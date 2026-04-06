@@ -126,6 +126,9 @@ void Menu_Logo(void)
         if( System_GetKeyboard()->KeyUp[SDLK_ESCAPE] && alpha2 > 0.5f )
             break;
 
+        if( System_GetKeyboard()->KeyUp[SDLK_SPACE] && alpha2 > 0.5f )
+            break;
+
         if( stage == 0 ) {
             alpha1 += tMainSR3.fDeltaTime/2;
             alpha2 += tMainSR3.fDeltaTime/2;

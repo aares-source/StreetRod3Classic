@@ -228,17 +228,17 @@ int CInput::Setup(char *string)
 	Down = false;
 
 	// Check if it's a mouse
-	if(stricmp(string,"mouse1") == 0) {
+	if(_stricmp(string,"mouse1") == 0) {
 		Type = INP_MOUSE;
 		Data = 1;
 		return true;
 	}
-	if(stricmp(string,"mouse2") == 0) {
+	if(_stricmp(string,"mouse2") == 0) {
 		Type = INP_MOUSE;
 		Data = 3;
 		return true;
 	}
-	if(stricmp(string,"mouse3") == 0) {
+	if(_stricmp(string,"mouse3") == 0) {
 		Type = INP_MOUSE;
 		Data = 2;
 		return true;
@@ -268,7 +268,7 @@ int CInput::Setup(char *string)
 
 		// Go through the joystick list
 		for(n=0;n<sizeof(Joysticks) / sizeof(joystick_t);n++) {
-			if(stricmp(Joysticks[n].text,string) == 0) {
+			if(_stricmp(Joysticks[n].text,string) == 0) {
 				Data = Joysticks[n].value;
 				Extra = Joysticks[n].extra;
 				return true;
@@ -296,7 +296,7 @@ int CInput::Setup(char *string)
 
 		// Go through the joystick list
 		for(n=0;n<sizeof(Joysticks) / sizeof(joystick_t);n++) {
-			if(stricmp(Joysticks[n].text,string) == 0) {
+			if(_stricmp(Joysticks[n].text,string) == 0) {
 				Data = Joysticks[n].value;
 				Extra = Joysticks[n].extra;
 				return true;
@@ -311,7 +311,7 @@ int CInput::Setup(char *string)
 
 	// Go through the key list checking with piece of text it was
 	for(n=0;n<sizeof(Keys) / sizeof(keys_t);n++) {
-		if(stricmp(Keys[n].text,string) == 0) {
+		if(_stricmp(Keys[n].text,string) == 0) {
 			Data = Keys[n].value;
 			return true;
 		}

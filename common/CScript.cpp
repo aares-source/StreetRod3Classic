@@ -117,9 +117,9 @@ void CScript::NewVariable(char *sLine)
 
 	chardest = strchr(sLine,'=');
 	if(chardest != NULL) {
-		
+
 		// Variable
-		iPosition = chardest - sLine + 1;
+		iPosition = static_cast<int>(chardest - sLine + 1);
 		strcpy(var->sName, sLine);
 		var->sName[iPosition-1] = '\0';
 		TrimSpaces(var->sName);
@@ -149,7 +149,7 @@ void CScript::NewVariable(char *sLine)
 void CScript::TrimSpaces(char *str)
 {
 	char	temp[256];
-	unsigned int n = 0;
+	int n = 0;
 	unsigned int i = 0;
 	strcpy(temp,"");
 
@@ -165,7 +165,7 @@ void CScript::TrimSpaces(char *str)
 
 
 	// proceeding spaces
-	for(n=strlen(temp)-1;n>0;n--)
+	for(n=static_cast<int>(strlen(temp))-1;n>0;n--)
 		if(temp[n] != ' ')
 		{
 			temp[n+1] = '\0';
@@ -184,7 +184,7 @@ sc_item_t *CScript::FindItem(char *sName)
 	sc_item_t *it = tItems;
 
 	for(i=0;i<iNumItems;i++,it++) {
-		if(stricmp(it->sName,sName) == 0)
+		if(_stricmp(it->sName,sName) == 0)
 			return it;
 	}
 
@@ -200,7 +200,7 @@ sc_var_t *CScript::FindVariable(sc_item_t *it, char *sVar)
 	int i;
 
 	for(i=0;i<it->iNumVars;i++,var++) {
-		if(stricmp(var->sName,sVar) == 0)
+		if(_stricmp(var->sName,sVar) == 0)
 			return var;
 	}
 
@@ -247,18 +247,18 @@ int CScript::GetKeyword(char *sItem, char *sVar, int *val, int def)
 	// TODO: Search for keywords
 
 	// HACK
-	if(stricmp(var->sValue,"true") == 0)
+	if(_stricmp(var->sValue,"true") == 0)
 		return true;
-	if(stricmp(var->sValue,"false") == 0)
+	if(_stricmp(var->sValue,"false") == 0)
 		return false;
 
-	if(stricmp(var->sValue,"BLD_ALPHACOL") == 0)
+	if(_stricmp(var->sValue,"BLD_ALPHACOL") == 0)
 		return 1;
-	if(stricmp(var->sValue,"BLD_NORMAL") == 0)
+	if(_stricmp(var->sValue,"BLD_NORMAL") == 0)
 		return 2;
-	if(stricmp(var->sValue,"BLD_ONEONE") == 0)
+	if(_stricmp(var->sValue,"BLD_ONEONE") == 0)
 		return 3;
-	if(stricmp(var->sValue,"BLD_ONEZERO") == 0)
+	if(_stricmp(var->sValue,"BLD_ONEZERO") == 0)
 		return 4;
 
 

@@ -47,9 +47,8 @@ FileNameGetSize
 */
 long Utility::FileNameGetSize(const char *name)
 {
-   FILE *f = fopen(name, "r");
-   
-   if (!f)
+   FILE *f = nullptr;
+   if (fopen_s(&f, name, "r") != 0 || !f)
       return 0;
 
    long size = FileGetSize(f);
@@ -103,15 +102,14 @@ FileReadAll
 */
 byte *Utility::FileReadAll(const char *name, long *dsize)
 {
-   FILE *in = fopen(name, "r");
-   
-   if (!in)
+   FILE *in = nullptr;
+   if (fopen_s(&in, name, "r") != 0 || !in)
       return 0;
 
    byte *b = FileReadAll(in, dsize);
-   
+
    fclose(in);
-   
+
    return b;
 }
 
@@ -159,7 +157,7 @@ char *Utility::LineRead(char **pos)
    if (!(buffer = new char[(*pos - start) + 1]))
       return 0;
 
-   strncpy(buffer, start, *pos - start);
+   strncpy_s(buffer, (*pos - start) + 1, start, *pos - start);
    buffer[*pos - start] = '\0';
 
    return buffer;
@@ -189,7 +187,7 @@ char *Utility::LineReadUntil(char **pos, char end)
    if (!(buffer = new char[(*pos - start) + 1]))
       return 0;
 
-   strncpy(buffer, start, *pos - start);
+   strncpy_s(buffer, (*pos - start) + 1, start, *pos - start);
    buffer[*pos - start] = '\0';
 
    return buffer;

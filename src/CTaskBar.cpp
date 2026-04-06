@@ -169,7 +169,7 @@ void CTaskBar::toggleItem(char *id)
 
     // Go through the items
 	for(int i=0;i<iNumTaskItems;i++) {
-		if(stricmp(tTaskItems[i].sId,id) == 0) {
+		if(_stricmp(tTaskItems[i].sId,id) == 0) {
 
             // Toggle this item
             tTaskItems[i].bToggled = true;
@@ -190,7 +190,7 @@ void CTaskBar::Remove(char *id)
 
 	// Go through the items
 	for(int i=0;i<iNumTaskItems;i++) {
-		if(stricmp(tTaskItems[i].sId,id) == 0) {
+		if(_stricmp(tTaskItems[i].sId,id) == 0) {
 
 			// Remove this button
 			for(n=0,a=0;n<iNumTaskItems;n++) {

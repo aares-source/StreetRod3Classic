@@ -415,7 +415,7 @@ void CPart::LoadNuts(void)
 	
 	// Get the nut count
 	for(n=0;n<cModel->getNumGameObjects();n++,g++) {
-		if(strnicmp(g->sName,"$bolt",5) == 0)
+		if(_strnicmp(g->sName,"$bolt",5) == 0)
 			iNumNuts++;
 	}
 
@@ -430,7 +430,7 @@ void CPart::LoadNuts(void)
 	g = cModel->getGameObject(0);
 	int i=0;
 	for(n=0;n<cModel->getNumGameObjects();n++,g++) {
-		if(strnicmp(g->sName,"$bolt",5) == 0)  {
+		if(_strnicmp(g->sName,"$bolt",5) == 0)  {
 			cNuts[i].setOrigPos(g->vPosition);
 			cNuts[i++].setOrigMat(g->cMatrix);
 		}

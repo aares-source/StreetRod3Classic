@@ -466,7 +466,7 @@ void CLocation::FinalDraw(void)
 
 	// Status text
 	if(iGotStatusText) {
-		int length = strlen(sStatusText)*10;
+		int length = static_cast<int>(strlen(sStatusText))*10;
 		length /= 2;
 
 		int x = 400-length;

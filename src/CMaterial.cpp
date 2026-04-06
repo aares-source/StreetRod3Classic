@@ -71,7 +71,7 @@ void CMaterial::Load(int id, FILE *fp)
 		// Parse the lines
 		fscanf(fp,"%[^\n]\n",sLine);
 		TrimSpaces(sLine);
-		iLength = strlen(sLine);
+		iLength = static_cast<int>(strlen(sLine));
 
 		// Blank lines
 		if(iLength == 0)
@@ -88,7 +88,7 @@ void CMaterial::Load(int id, FILE *fp)
 		if(sLine[iLength-1] == '{') {
 			
 			// Read pass name
-			if(strnicmp(sLine,"pass",4) == 0) {
+			if(_strnicmp(sLine,"pass",4) == 0) {
 				iInPass = true;
 				iCurPass = sLine[4]-'1';
 
@@ -134,7 +134,7 @@ void CMaterial::TranslateFunction(char *sLine, int p)
 		return;
 
 	// Texture name
-	if(stricmp(tok,"texture") == 0) {		
+	if(_stricmp(tok,"texture") == 0) {		
 		tok = strtok(NULL," ");
 		if(tok) {
 
@@ -159,7 +159,7 @@ void CMaterial::TranslateFunction(char *sLine, int p)
 	} else
 
 	// Blending type
-	if(stricmp(tok,"blend") == 0) {
+	if(_stricmp(tok,"blend") == 0) {
 		tok = strtok(NULL," ");
 
 		val = Key_FindValue(tok);
@@ -170,14 +170,14 @@ void CMaterial::TranslateFunction(char *sLine, int p)
 	} else
 
 	// Alpha value
-	if(stricmp(tok,"alpha") == 0) {
+	if(_stricmp(tok,"alpha") == 0) {
 		tok = strtok(NULL," ");
 
 		pass->fAlpha = (float)atof(tok);
 	} else
 
 	// Texture generation type
-	if(stricmp(tok,"tcGen") == 0) {
+	if(_stricmp(tok,"tcGen") == 0) {
 		tok = strtok(NULL," ");
 
 		val = Key_FindValue(tok);
@@ -186,7 +186,7 @@ void CMaterial::TranslateFunction(char *sLine, int p)
 	} else
 
 	// Lightmap
-	/*if(stricmp(tok,"lightmap") == 0) {
+	/*if(_stricmp(tok,"lightmap") == 0) {
 		tok = strtok(NULL," ");
 
 		val = Key_FindValue(tok);
@@ -195,7 +195,7 @@ void CMaterial::TranslateFunction(char *sLine, int p)
 	} else*/
 
 	// Backface culling
-	if(stricmp(tok,"backcull") == 0) {
+	if(_stricmp(tok,"backcull") == 0) {
 		tok = strtok(NULL," ");
 
 		val = Key_FindValue(tok);
@@ -204,7 +204,7 @@ void CMaterial::TranslateFunction(char *sLine, int p)
 	} else
 
 	// Colour
-	if(stricmp(tok,"rgb") == 0) {
+	if(_stricmp(tok,"rgb") == 0) {
 		tok = strtok(NULL,",");
 		pass->tColour.R = (float)atof(tok);
 		tok = strtok(NULL,",");
@@ -215,7 +215,7 @@ void CMaterial::TranslateFunction(char *sLine, int p)
 	} else
 
     // Lighting
-    if( stricmp(tok,"lighting") == 0 ) {
+    if( _stricmp(tok,"lighting") == 0 ) {
         tok = strtok(NULL," ");
         val = Key_FindValue(tok);
 		if(val != -666)

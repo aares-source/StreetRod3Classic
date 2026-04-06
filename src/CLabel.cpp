@@ -45,8 +45,8 @@ void CLabel::Draw(void)
     Font_SetAlpha(1);
 	Font_SetSize(nSize);
     if( iCenter ) {
-        Font_Draw( iX - (strlen(sText)*nSize)/2+2, iY-2, CVec(0,0,0), sText);
-        Font_Draw( iX - (strlen(sText)*nSize)/2, iY, CVec(1,1,1), sText);
+        Font_Draw( iX - (static_cast<int>(strlen(sText))*nSize)/2+2, iY-2, CVec(0,0,0), sText);
+        Font_Draw( iX - (static_cast<int>(strlen(sText))*nSize)/2, iY, CVec(1,1,1), sText);
     } else {
         Font_Draw(iX+2, iY-2, CVec(0,0,0), sText);
 	    Font_Draw(iX, iY, CVec(1,1,1), sText);

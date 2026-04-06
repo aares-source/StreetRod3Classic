@@ -81,12 +81,12 @@ int CCar::LoadModel(char *sCarDir)
     Tex_RemoveDir(buf);
 
     // Get the colour of the car
-    int num = cModel->getNumMaterials();
+	int num = cModel->getNumMaterials();
 	for(int m=0;m<num;m++) {
 		CMaterial *mat = cModel->getMaterial(m);
 
-		if(stricmp(mat->getName(),"CarMaterial") == 0) {
-            tColour = mat->getPass(0)->tColour;
+		if(_stricmp(mat->getName(),"CarMaterial") == 0) {
+			tColour = mat->getPass(0)->tColour;
 			// 17/09/2005
 			m=num+1;	// breaks for
 			//
@@ -451,10 +451,10 @@ void CCar::calculateRest(CVec pos)
 int CCar::getMeshi(char *sName)
 {
 	mesh_t *m = cModel->getMeshes();	
-    for( unsigned int i=0; i<cModel->getNumMeshes(); i++,m++ ) {
-        if(stricmp(m->szName,sName) == 0)
-            return (int)i;
-    }
+	for( unsigned int i=0; i<cModel->getNumMeshes(); i++,m++ ) {
+		if(_stricmp(m->szName,sName) == 0)
+			return (int)i;
+	}
 
 	return -1;
 }
@@ -1177,12 +1177,12 @@ void CCar::PaintCar(CVec colour, bool bClearDecals)
 	for(int m=0;m<num;m++) {
 		CMaterial *mat = cModel->getMaterial(m);
 
-		if(stricmp(mat->getName(),"CarMaterial") == 0) {
+		if(_stricmp(mat->getName(),"CarMaterial") == 0) {
 
 			// Go through each pass
-            for(int p=0;p<mat->getNumPasses();p++) {
+			for(int p=0;p<mat->getNumPasses();p++) {
 				mat->getPass(p)->tColour = tColour;
-                mat->getPass(p)->iUseColour = true;
+				mat->getPass(p)->iUseColour = true;
             }
 		}
 	}
@@ -1635,10 +1635,10 @@ void CCar::applyDecal(char *szFilename, CCamera *psCam, int Rx, int Ry, int Rw, 
             // This polygon _must_ be textured with the 'carmaterial' mat            
             CMaterial *mat = cModel->findMaterial(poly->nTextureID);
             if( mat ) {
-                if( stricmp(mat->getName(),"CarMaterial") != 0 )
+                if( _stricmp(mat->getName(),"CarMaterial") != 0 )
                     continue;
             }
-            
+
             // Check if any of the vertices are inside the volume
             for( n=0; n<3; n++ ) {
                 CVec vert = cMatrix.MultiplyVector(CVec( (cModel->getVertexList()+poly->nVertex[n])->X,

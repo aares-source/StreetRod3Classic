@@ -1651,7 +1651,7 @@ void Gar_InitSpeechBubble(char *fmt, ...)
         }
     }
     if(nSpeechLength == -1)
-        nSpeechLength = strlen(szSpeech);
+		nSpeechLength = static_cast<int>(strlen(szSpeech));
 
     oldChange = tPartChange.iChange;
     tPartChange.iChange = false;

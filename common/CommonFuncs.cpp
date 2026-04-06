@@ -39,7 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void TrimSpaces(char *str)
 {
 	char	temp[256];
-	uint	n=0, i=0;
+	int	n=0;
+	uint i=0;
 	strcpy(temp,"");
 
 
@@ -53,7 +54,7 @@ void TrimSpaces(char *str)
 
 
 	// proceeding spaces
-	for(n=strlen(temp)-1;n>=0;n--)
+	for(n=static_cast<int>(strlen(temp))-1;n>=0;n--)
 		if(temp[n] != ' ' && temp[n] != 9) {
 			temp[n+1] = '\0';
 			break;
@@ -175,7 +176,7 @@ char *addString(char *dst, char *src)
 // Write a pascal type string to a file
 void writePascalString(char *szString, FILE *fp)
 {
-    byte l = strlen(szString);
+    byte l = static_cast<byte>(strlen(szString));
     fwrite(&l,      sizeof(byte),   1,  fp);
     fwrite(szString,sizeof(char),   l,  fp);
 }
@@ -198,7 +199,7 @@ char *readPascalString(char *szString, FILE *fp)
 // Wrap a string by adding newlines
 char *wrapText(char *szString, int nWidth, int nFontSize)
 {
-    int nLength = strlen(szString);
+    int nLength = static_cast<int>(strlen(szString));
     int nBreakPos = -1;
     int nWord = 0;
     int nPos = 0;

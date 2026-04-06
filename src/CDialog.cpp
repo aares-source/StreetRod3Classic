@@ -179,21 +179,21 @@ void CDialog::Create(void)
 
 	// Check if it's a title we have an image for
 	iTitle = -1;
-	if(stricmp(sTitle, "cars") == 0)
+	if(_stricmp(sTitle, "cars") == 0)
 		iTitle = dlgt_cars;
-	else if(stricmp(sTitle, "parts") == 0)
+	else if(_stricmp(sTitle, "parts") == 0)
 		iTitle = dlgt_parts;
-	else if(stricmp(sTitle, "paint") == 0)
+	else if(_stricmp(sTitle, "paint") == 0)
 		iTitle = dlgt_paint;
-	else if(stricmp(sTitle, "car info") == 0)
+	else if(_stricmp(sTitle, "car info") == 0)
 		iTitle = dlgt_carinfo;
-    else if(stricmp(sTitle, "system") == 0)
+    else if(_stricmp(sTitle, "system") == 0)
         iTitle = dlgt_system;
-    else if(stricmp(sTitle, "part change") == 0)
+    else if(_stricmp(sTitle, "part change") == 0)
         iTitle = dlgt_partchange;
-    else if(stricmp(sTitle, "Decal") == 0)
+    else if(_stricmp(sTitle, "Decal") == 0)
         iTitle = dlgt_decal;
-    else if(stricmp(sTitle, "Radio") == 0)
+    else if(_stricmp(sTitle, "Radio") == 0)
         iTitle = dlgt_radio;
 
     bGrabbed = false;

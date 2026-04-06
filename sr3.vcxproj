@@ -199,5 +199,13 @@
     <ClCompile Include="src\TextureManager.cpp" />
     <ResourceCompile Include="**\*.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="code\blender_exporter\aux_writer.py" />
+    <None Include="code\blender_exporter\blender_exporter.pyproj" />
+    <None Include="code\blender_exporter\exporter.py" />
+    <None Include="code\blender_exporter\mat_writer.py" />
+    <None Include="code\blender_exporter\README.md" />
+    <None Include="code\blender_exporter\__init__.py" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

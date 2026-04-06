@@ -1238,7 +1238,7 @@ void Gar_ProcessSellCar(void)
         
         int size = 16;
         Font_SetSize(size);
-        int length = strlen(szSellCarText) * size;
+        int length = static_cast<int>(strlen(szSellCarText)) * size;
         Font_Draw( 400 - length/2, 450, CVec(0,0,0), szSellCarText );
     }
 

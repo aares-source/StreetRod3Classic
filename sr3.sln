@@ -4,6 +4,8 @@ VisualStudioVersion = 18.4.3.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sr3", "sr3.vcxproj", "{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "blender_exporter", "blender_exporter\blender_exporter.pyproj", "{B7E3F1A2-4D5C-4890-BC12-9E8A7F603D21}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "About", "About", "{C4FF20EE-7E46-4CE7-BA36-1070DB232A7B}"
 	ProjectSection(SolutionItems) = preProject
 		..\history.txt = ..\history.txt
@@ -27,6 +29,10 @@ Global
 		{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}.Release|Win32.Build.0 = Release|Win32
 		{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}.Release|x64.ActiveCfg = Release|x64
 		{E8A6B3D2-6C6B-4F3B-A9E2-1234567890AB}.Release|x64.Build.0 = Release|x64
+		{B7E3F1A2-4D5C-4890-BC12-9E8A7F603D21}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{B7E3F1A2-4D5C-4890-BC12-9E8A7F603D21}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B7E3F1A2-4D5C-4890-BC12-9E8A7F603D21}.Release|Win32.ActiveCfg = Release|Any CPU
+		{B7E3F1A2-4D5C-4890-BC12-9E8A7F603D21}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -182,7 +182,7 @@ void ParseArguments(int argc, char *argv[])
 
         // -nosound
         // Turns off the sound
-        if( stricmp(a, "-nosound") == 0 ) {
+        if( _stricmp(a, "-nosound") == 0 ) {
             bDisableSound = true;
         }
     }    

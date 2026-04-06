@@ -495,9 +495,9 @@ bool CModel::loadMaterials(char *szFilename)
 		// Parse the lines
 		fscanf(fp,"%[^\n]\n",sLine);
 		TrimSpaces(sLine);
-		iLength = strlen(sLine);
-        if( iLength == 0 )
-            continue;
+		iLength = static_cast<int>(strlen(sLine));
+		if( iLength == 0 )
+			continue;
 
 
 		if(sLine[iLength-1] == '{') {
@@ -510,7 +510,7 @@ bool CModel::loadMaterials(char *szFilename)
 			for( n=0; n<m_nNumMaterials; n++,mat++ ) {
                 if( mat->isLoaded() )
                     continue;
-				if(stricmp(mat->getName(), sMat) == 0) {
+				if(_stricmp(mat->getName(), sMat) == 0) {
 					mat->Load(n,fp);
                     break;
 				}
@@ -990,7 +990,7 @@ gobject_t *CModel::findGameObject(char *sName)
 	gobject_t *g = m_psGameObjects;
 
 	for( UINT n=0; n<m_nNumGameObjects; n++,g++ ) {
-		if(stricmp(sName,g->sName) == 0)
+		if(_stricmp(sName,g->sName) == 0)
 			return g;
 	}
 
@@ -1005,7 +1005,7 @@ gobject_t *CModel::findGameObject(char *szName1,char *szName2)
 	gobject_t *g = m_psGameObjects;
 
 	for( UINT n=0; n<m_nNumGameObjects; n++,g++ ) {
-		if( (stricmp(szName1,g->sName) == 0) || (stricmp(szName2,g->sName) == 0) )
+		if( (_stricmp(szName1,g->sName) == 0) || (_stricmp(szName2,g->sName) == 0) )
 			return g;
 	}
 
@@ -1018,7 +1018,7 @@ gobject_t *CModel::findGameObjectn(char *sName, int n)
 	gobject_t *g = m_psGameObjects;
 
 	for( UINT i=0; i<m_nNumGameObjects; i++,g++ ) {
-		if(strnicmp(sName,g->sName,n) == 0)
+		if(_strnicmp(sName,g->sName,n) == 0)
 			return g;
 	}
 
@@ -1066,7 +1066,7 @@ mesh_t *CModel::findMesh(char *name)
 {
 	mesh_t *m = m_psMeshes;	
 	for( uint i=0; i<m_nNumMeshes; i++,m++ ) {
-        if(stricmp(name,m->szName) == 0)
+        if(_stricmp(name,m->szName) == 0)
 			return m;
 	}
 

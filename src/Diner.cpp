@@ -839,7 +839,7 @@ void Dnr_SpeechProcess(void)
 
     int size = 16;
     Font_SetSize(size);
-    int length = strlen( szDnrSpeech ) * size;
+    int length = static_cast<int>(strlen( szDnrSpeech )) * size;
 
     Font_Draw( 400 - length/2, 445, CVec(0,0,0), szDnrSpeech );
 

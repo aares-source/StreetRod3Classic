@@ -124,7 +124,7 @@ CTexture *LoadTexture(char *_name)
 
 	for(n=0;n<MAX_TEXTURES;n++) {
 		if(TextureCache[n].IsUsed()) {
-			if(stricmp(TextureCache[n].GetName(),_name) == 0)
+			if(_stricmp(TextureCache[n].GetName(),_name) == 0)
 				return &TextureCache[n];
 		} else
 			if(tex == -1)

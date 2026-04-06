@@ -186,13 +186,13 @@ int GetString(char *filename, char *section, char *key, char *string)
 		if(chardest != NULL)
 		{
 			// Key
-			Position = chardest - Line + 1;
+			Position = static_cast<int>(chardest - Line + 1);
 			sr_strncpy(curKey,Line,MAX_MINOR_LENGTH-1);
 			curKey[Position-1] = '\0';
 			TrimSpaces(curKey);
 
 			// Check if this is the key were looking for under the section were looking for
-			if(stricmp(curKey,key) == 0 && stricmp(curSection,section) == 0)
+			if(_stricmp(curKey,key) == 0 && _stricmp(curSection,section) == 0)
 			{				
 				// Get the value
 				sr_strncpy(string,Line+Position,MAX_MINOR_LENGTH-1);

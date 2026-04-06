@@ -255,7 +255,7 @@ void text_t::WalkString(char *buffPtr, GLint xpos, GLint ypos, GLint *vPort)
    GLint y = ypos;
    GLint carrage = 0;
    GLint tabs = 0;
-   GLint len = strlen(buffPtr);
+   GLint len = static_cast<GLint>(strlen(buffPtr));
    GLint xMax;
 
    xMax = vPort[0] + vPort[2];

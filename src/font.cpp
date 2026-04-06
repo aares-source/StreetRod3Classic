@@ -121,7 +121,7 @@ void Font_DrawCentered(int x, int y, CVec col, char *fmt, ...)
 	vsprintf(buf, fmt, arg);
 	va_end(arg);
 
-    int w = strlen(buf) * text.GetSize();
+	int w = static_cast<int>(strlen(buf)) * text.GetSize();
 
     Font_Draw( x - w/2, y, col, buf );
 }
