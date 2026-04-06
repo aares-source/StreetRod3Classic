@@ -611,8 +611,12 @@ void Race_ProcessDriving(void)
 	Car_ProcessCar( psCar, psRace->pcTrackModel, psRace->pcRaceCar, &psRace->cCamera, dt, false );
 
 	// Update engine sound frequency based on RPM (V8 firing: RPM/60*4)
-	if(hEngineStream)
+	if(hEngineStream) {
 		fEngineFreq = MAX(50.0f, (float)psCar->nRPM / 60.0f * 4.0f);
+		// Lower volume when in neutral gear
+		float fEngineVol = (psCar->nGear == 0) ? 0.04f : 0.1f;
+		BASS_ChannelSetAttribute(hEngineStream, BASS_ATTRIB_VOL, fEngineVol);
+	}
 
 	// Simulate the opponent
     Car_ProcessCar( psOpp, psRace->pcTrackModel, psRace->pcOppCar, NULL, dt, false );

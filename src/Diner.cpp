@@ -446,7 +446,10 @@ void Dnr_ProcessGUI(void)
             // Road : Back
             case dng_roadback:
                 if(ev->iEventMsg == BUT_CLICKED) {
-                    Dnr_ChallengeOpponent(1, 1);
+                    if(psDiner->nNumRoadTracks == 0)
+                        Dnr_ChallengeOpponent(0, 0);
+                    else
+                        Dnr_ChallengeOpponent(1, 1);
                     return;
                 }
                 break;
@@ -693,6 +696,12 @@ void Dnr_ChallengeOpponent(int nLevel, int nType)
 
         // Road
         if(nType == 1) {
+            if(psDiner->nNumRoadTracks == 0) {
+                sRaceInfo.szTrackDir[0] = '\0';
+                Dnr_ChallengeOpponent(2, 1);
+                return;
+            }
+
             for(int i=0; i<psDiner->nNumRoadTracks; i++) {
                 cDinerLayout.Add(new CButton(psDiner->sRoadTracks[i].szName,-1),   dng_roadtrk1+i,   335,230+i*5,0,  0);
 

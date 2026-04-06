@@ -11,6 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "About", "About", "{C4FF20EE
 		..\history.txt = ..\history.txt
 		..\LICENSE = ..\LICENSE
 		..\README.md = ..\README.md
+		..\seat-600-license.md = ..\seat-600-license.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3D Models", "3D Models", "{D74FBA33-4D95-412F-B24C-47DFE666FFB9}"
+	ProjectSection(SolutionItems) = preProject
+		..\blender 3d models\seat-600\seat-600.aux = ..\blender 3d models\seat-600\seat-600.aux
+		..\blender 3d models\seat-600\seat-600.mat = ..\blender 3d models\seat-600\seat-600.mat
 	EndProjectSection
 EndProject
 Global

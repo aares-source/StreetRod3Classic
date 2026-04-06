@@ -165,7 +165,8 @@ void System_InitializeSound(void)
 			writeLog("Sound initialized OK\n");
 		}
 		BASS_Start();
-		BASS_SetVolume((float)psOptions->nSoundVolume / 100.0f);
+		BASS_SetConfig(BASS_CONFIG_GVOL_SAMPLE, (DWORD)(psOptions->nSoundVolume * 100));
+		BASS_SetConfig(BASS_CONFIG_GVOL_STREAM, (DWORD)(psOptions->nSoundVolume * 100));
 	}
 }
 

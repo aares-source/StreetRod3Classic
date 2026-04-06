@@ -65,7 +65,7 @@ bool LoadOptions(void)
 
     // Sound
     ReadKeyword( "config.cfg", "Sound", "Sound", &psOptions->nSoundOn, true );
-    ReadInteger( "config.cfg", "Sound", "Volume", &psOptions->nSoundVolume, 100 );
+    ReadInteger( "config.cfg", "Sound", "Volume", &psOptions->nSoundVolume, 20 );
     ReadInteger( "config.cfg", "Sound", "MusicVolume", &psOptions->nMusicVolume, 20 );
 
     // Controls

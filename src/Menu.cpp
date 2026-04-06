@@ -603,10 +603,11 @@ void Menu_Options(void)
                         psOptions->nSoundVolume = ((CSlider *)cOptions.getWidget(opt_soundvol))->getValue();
                         psOptions->nMusicVolume = ((CSlider *)cOptions.getWidget(opt_musicvol))->getValue();
 
-                        // Update the sound lib
+						// Update the sound lib
 						if(psOptions->nSoundOn) {
 							BASS_Start();
-							BASS_SetVolume((float)psOptions->nSoundVolume / 100.0f);
+							BASS_SetConfig(BASS_CONFIG_GVOL_SAMPLE, (DWORD)(psOptions->nSoundVolume * 100));
+							BASS_SetConfig(BASS_CONFIG_GVOL_STREAM, (DWORD)(psOptions->nSoundVolume * 100));
                         } else
                             BASS_Stop();
 

@@ -113,7 +113,7 @@ void Game_Start(void)
 
 			// Race
 			case LOC_RACE:
-				if(!Race_Start("track1"))
+				if(!Race_Start(sRaceInfo.szTrackDir[0] ? sRaceInfo.szTrackDir : "track1"))
 					return;
 				break;
 		}

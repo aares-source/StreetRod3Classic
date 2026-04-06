@@ -795,16 +795,11 @@ void Gar_NewspaperEntriesProcess(int nFilter)
 	}
 
 
-    // Was escape pressed?
-    if( System_GetKeyboard()->KeyUp[SDLK_ESCAPE] && !iBuyingItem ) {
-        // Go back to the front page
-        Gar_NewspaperFreeEntries();
-        tGarage->iState = GAR_NEWSPAPER;
-	    iNewsmode = news_frontpage;
-	    iBuyingItem = false;
-	    iViewingCar = false;
+	// Was escape pressed?
+	if( System_GetKeyboard()->KeyUp[SDLK_ESCAPE] && !iBuyingItem ) {
+		Gar_NewspaperShutdown();
 		return;
-    }
+	}
 }
 
 
@@ -999,8 +994,8 @@ void Gar_NewspaperViewCar(void)
     // Spin the car
     fCarSpin += 10*tMainSR3.fDeltaTime;
 
-	// If the user clicked the mouse, go back to the menu
-	if(System_GetMouse()->Up & SDL_BUTTON(1)) {
+	// If the user clicked the mouse or pressed escape, go back to the menu
+	if( (System_GetMouse()->Up & SDL_BUTTON(1)) || System_GetKeyboard()->KeyUp[SDLK_ESCAPE] ) {
 		iViewingCar = false;
 		cSeeCar.Shutdown();
 	}

@@ -73,6 +73,9 @@ typedef struct {
     int     nDeveloper;
     int     nQuadTree;
 
+    // Language
+    char    szLanguage[8];
+
 } option_t;
 
 

@@ -38,14 +38,31 @@ sfxpart_t	sfxParts;
 
 
 ///////////////////
+// Set the default volume of a sample
+static void SetSampleVolume(HSAMPLE smp, float vol)
+{
+	if(!smp) return;
+	BASS_SAMPLE info;
+	if(BASS_SampleGetInfo(smp, &info)) {
+		info.volume = vol;
+		BASS_SampleSetInfo(smp, &info);
+	}
+}
+
+
+///////////////////
 // Load the sounds
 int LoadSounds(void)
 {
 	sfxParts.smpRatchet = Cache_LoadSample("data/sounds/rachet.wav",4);
-    sfxParts.smpPaint = Cache_LoadSample("data/sounds/paint.wav",1);
-    sfxParts.smpRemove = Cache_LoadSample("data/sounds/remove.wav",1);
-    sfxParts.smpPuton = Cache_LoadSample("data/sounds/puton.wav",1);
+	sfxParts.smpPaint = Cache_LoadSample("data/sounds/paint.wav",1);
+	sfxParts.smpRemove = Cache_LoadSample("data/sounds/remove.wav",1);
+	sfxParts.smpPuton = Cache_LoadSample("data/sounds/puton.wav",1);
 
+	SetSampleVolume(sfxParts.smpRatchet, 0.5f);
+	SetSampleVolume(sfxParts.smpPaint,   0.5f);
+	SetSampleVolume(sfxParts.smpRemove,  0.5f);
+	SetSampleVolume(sfxParts.smpPuton,   0.5f);
 
 	return true;
 }
