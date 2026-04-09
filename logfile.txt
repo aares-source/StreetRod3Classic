@@ -4,13 +4,45 @@ Street Rod 3 Log file:
 Street Rod 3 begin system initialization...
 Initializing OpenGL
    Screen BPP : 16
-   Vendor     : Intel
-   Renderer   : Intel(R) Iris(R) Xe Graphics
-   Version    : 4.6.0 - Build 32.0.101.7077
+   Vendor     : NVIDIA Corporation
+   Renderer   : NVIDIA GeForce RTX 3050 Ti Laptop GPU/PCIe/SSE2
+   Version    : 4.6.0 NVIDIA 591.86
 
    Using 'GL_ARB_multitexture' extension
 ================================================
-Texture Load: file "data/gui/font2.png" not found
-Texture Load: file "data/gui/mouse2.png" not found
-Unable to initialize MouseFailed to Initialize Graphic Interface
+Sound initialized OK
+Texture Load: file "data/cars/mustang/chrome.png" not found
+Texture Load: file "data/cars/mustang/black.png" not found
+Texture Load: file "data/cars/mustang/black.png" not found
+Texture Load: file "data/cars/mustang/chrome.png" not found
+Texture Load: file "data/cars/mustang/grey.png" not found
+Modeller Warning: Could not find the object '$lmuffler' on the car
+Modeller Warning: Could not find the object '$rmuffler' on the car
+Texture Load: file "data/cars/mustang/chrome.png" not found
+Texture Load: file "data/cars/mustang/black.png" not found
+Texture Load: file "data/cars/mustang/black.png" not found
+Texture Load: file "data/cars/mustang/chrome.png" not found
+Texture Load: file "data/cars/mustang/grey.png" not found
+Modeller Warning: Could not find the object '$lmuffler' on the car
+Modeller Warning: Could not find the object '$rmuffler' on the car
+Texture Load: file "data/cars/mustang/chrome.png" not found
+Texture Load: file "data/cars/mustang/black.png" not found
+Texture Load: file "data/cars/mustang/black.png" not found
+Texture Load: file "data/cars/mustang/chrome.png" not found
+Texture Load: file "data/cars/mustang/grey.png" not found
+Modeller Warning: Could not find the object '$lmuffler' on the car
+Modeller Warning: Could not find the object '$rmuffler' on the car
+Texture Load: file "data/cars/mustang/chrome.png" not found
+Texture Load: file "data/cars/mustang/black.png" not found
+Texture Load: file "data/cars/mustang/black.png" not found
+Texture Load: file "data/cars/mustang/chrome.png" not found
+Texture Load: file "data/cars/mustang/grey.png" not found
+Modeller Warning: Could not find the object '$lmuffler' on the car
+Modeller Warning: Could not find the object '$rmuffler' on the car
+Radio: Loading files:
+ Adding data/sounds\a_garage.mp3
+Texture Load: file "data/cities/LA/garage/Floor.PNG" not found
+Texture Load: file "data/cities/LA/garage/BLACK.PNG" not found
+Texture Load: file "data/cities/LA/garage/Fluro.PNG" not found
+
 Shutting down the system...
